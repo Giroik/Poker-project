@@ -19,8 +19,7 @@ function getRadndomInt(max:number)
 
 export function getCard(deck:string[],setDeck:any)
 {
-    let index:number=getRadndomInt(deck.length)
-    console.log(deck.at(index))
+    const index:number=getRadndomInt(deck.length)
     setDeck(deck.filter((card)=>{
         return card!=deck.at(index)
     }))

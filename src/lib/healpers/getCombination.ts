@@ -5,11 +5,11 @@ import {getSet} from "./set";
 import {checkFullHouse} from "./fullHouse";
 import {getStreet, streetCheck} from "./street";
 import {getFlash} from "./flash";
+import {streetFlashCheck} from "./streetFlash";
+import {rojalFlash} from "./rojalFlash";
 
-let a="hello"
-console.log()
-const tableCards = ["5C", "4D", "8C", "6C", "14C"]
-const playerCards = ["14", "7C"]
+const tableCards = ["5D", "13C", "10C", "11C", "12C"]
+const playerCards = ["5C", "14C"]
 
 
 export function getCardNumber(card: string) {
@@ -29,8 +29,7 @@ export function compareNumeric(a: number, b: number) {
 
 //////////////////////////////////
 function getCombination() {
-    console.log(streetCheck(tableCards, playerCards))
-    // console.log(getCardSimbol("2H"))
+    console.log(rojalFlash(tableCards, playerCards))
 }
 
 export default getCombination
