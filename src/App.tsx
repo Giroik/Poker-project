@@ -1,49 +1,58 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./App.css";
-import { getCard, getCardDeck } from "./lib/healpers/getCardDeck";
-import Card from "./components/Card";
+import { getCardDeck } from "./lib/healpers/getCardDeck";
 import Table from "./components/Table";
 import { crupieLoop, handOver } from "./lib/crupie/useCrupie";
-import getCombination from "./lib/healpers/getCombination";
 
 function App() {
   const [deck, setDeck] = useState<string[]>(getCardDeck());
   const [table, setTable] = useState<any>([]);
-
-  const card2 = useMemo(() => getCard(deck, setDeck), []);
-  const card1 = useMemo(() => getCard(deck, setDeck), []);
-  const [hand1, setHand1] = useState<any>([card1, card2]);
   const [hands, setHands] = useState<any>();
+  const [step, setStep] = useState<number>(0);
+  const [bank, setBank] = useState<any>();
+
   useEffect(() => {
-    setHands(handOver(4, deck, setDeck));
-  }, []);
-
-  const [hand, setHand] = useState<any>([]);
-  const [step, setStep] = useState<number>(1);
-  // getCombination()
-  const buttonHandler = () => {
-    let newCard = getCard(deck, setDeck);
-
-    setHand([...hand, newCard]);
-  };
-  //const crupieLoop = useCrupie({step, setStep, table,setTable, deck, setDeck})
+    console.log(bank);
+  }, [bank]);
 
   return (
     <div className="App">
-      <button onClick={buttonHandler}>Get card</button>
-      <p>
-        {hand.map((card: string) => (
-          <Card card={card} />
-        ))}
-      </p>
       <Table table={table} cards={hands} />
       <button
         onClick={() =>
-          crupieLoop({ step, setStep, hands, table, setTable, deck, setDeck })
+          crupieLoop({
+            step,
+            setStep,
+            hands,
+            table,
+            setTable,
+            deck,
+            setDeck,
+            setHands,
+            bank,
+            setBank,
+          })
         }
       >
         Crupie Loop
       </button>
+      <br />
+      <br />
+      <button
+        onClick={() => {
+          console.log(bank);
+
+          setBank({ ...bank, Sum: bank.Sum + 100 });
+          //bank["0"];
+
+          //bank?.["0"]?.steps?.blind && bank?.["0"]?.steps?.blind = 100;
+        }}
+      >
+        Raise
+      </button>
+      <button>Call</button>
+      <button>Check</button>
+      <button>Fold</button>
     </div>
   );
 }

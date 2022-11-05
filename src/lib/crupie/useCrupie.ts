@@ -23,6 +23,9 @@ export function crupieLoop({
   setTable,
   deck,
   setDeck,
+  setHands,
+  bank,
+  setBank,
 }: {
   step: number;
   setStep: any;
@@ -31,9 +34,28 @@ export function crupieLoop({
   setTable: any;
   deck: string[];
   setDeck: any;
+  setHands: any;
+  bank: any;
+  setBank: any;
 }) {
+  if (step == 0) {
+    setHands(handOver(4, deck, setDeck));
+    setStep(1);
+  }
   if (step === 1) {
     console.log("Blinds");
+    let bank = {
+      Sum: 0,
+      ...Object.values(hands).map((hand) => {
+        return {
+          hand,
+          steps: { blind: 0, preflop: 0, flop: 0, turn: 0, river: 0 },
+        };
+      }),
+    };
+    setBank(bank);
+
+    console.log(bank);
     setStep(2);
   } else if (step === 2) {
     console.log("Preflop");
@@ -64,6 +86,14 @@ export function crupieLoop({
   } else if (step === 6) {
     console.log("Open");
     cardsRecognition(hands, table);
+    console.log("Раздать выйгрыш");
+    setStep(7);
+  } else if (step == 7) {
+    console.log("Clear");
+    setTable([]);
+    setDeck(getCardDeck());
+    setHands([]);
+    setStep(0);
   }
 }
 
@@ -79,7 +109,7 @@ function appendTable({ table, setDeck, deck, setTable }: any) {
   }
 }
 export function handOver(players: number, deck: any, setDeck: any) {
-  const hands: any = {};
+  const hands: { [index: number]: string[] } = {};
   for (let i = 0; i < players; i++) {
     const card2 = getCard(deck, setDeck);
     const card1 = getCard(deck, setDeck);
