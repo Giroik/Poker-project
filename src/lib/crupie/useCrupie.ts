@@ -24,8 +24,8 @@ export function crupieLoop({
   deck,
   setDeck,
   setHands,
-  bank,
-  setBank,
+  pot,
+  setPot,
 }: {
   step: number;
   setStep: any;
@@ -35,8 +35,8 @@ export function crupieLoop({
   deck: string[];
   setDeck: any;
   setHands: any;
-  bank: any;
-  setBank: any;
+  pot: any;
+  setPot: any;
 }) {
   if (step == 0) {
     setHands(handOver(4, deck, setDeck));
@@ -53,7 +53,7 @@ export function crupieLoop({
         };
       }),
     };
-    setBank(bank);
+    setPot(bank);
 
     console.log(bank);
     setStep(2);

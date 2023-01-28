@@ -15,7 +15,7 @@ function getRadndomInt(max: number) {
   return Math.floor(Math.random() * max);
 }
 
-export function getCard(deck: string[], setDeck: any): string {
+export function getCard(deck: string[], setDeck: any) {
   const index: number = getRadndomInt(deck.length);
   setDeck(
     deck.filter((card) => {

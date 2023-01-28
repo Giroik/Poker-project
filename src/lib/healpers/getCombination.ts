@@ -1,10 +1,8 @@
-import { cards } from "../constants/cards";
-import { getCard, getCardDeck } from "./getCardDeck";
-import { getPare, pareCheck } from "./pare";
-import { getSet, setCheck } from "./set";
+import { pareCheck } from "./pare";
+import { setCheck } from "./set";
 import { checkFullHouse } from "./fullHouse";
-import { getStreet, streetCheck } from "./street";
-import { flashCheck, getFlash } from "./flash";
+import { streetCheck } from "./street";
+import { flashCheck } from "./flash";
 import { streetFlashCheck } from "./streetFlash";
 import { rojalFlash } from "./rojalFlash";
 import careCheck from "./care";
@@ -29,7 +27,21 @@ export function compareNumeric(a: number, b: number) {
 
 //////////////////////////////////
 function getCombination(hand: any, table: any) {
-  console.log(rojalFlash(table, hand));
+  const comb = {
+    9: rojalFlash(table, hand),
+    8: streetFlashCheck(table, hand),
+    7: careCheck(table, hand),
+    6: checkFullHouse(table, hand),
+    5: flashCheck(table, hand),
+    4: streetCheck(table, hand),
+    3: setCheck(table, hand),
+    2: toPareCheck(table, hand),
+    1: pareCheck(table, hand),
+  };
+
+  console.log(comb);
+
+  /*  console.log(rojalFlash(table, hand));
   console.log(streetFlashCheck(table, hand));
   console.log(careCheck(table, hand));
   console.log(checkFullHouse(table, hand));
@@ -37,7 +49,7 @@ function getCombination(hand: any, table: any) {
   console.log(streetCheck(table, hand));
   console.log(setCheck(table, hand));
   console.log(toPareCheck(table, hand));
-  console.log(pareCheck(table, hand));
+  console.log(pareCheck(table, hand));*/
 }
 
 export default getCombination;
