@@ -1,5 +1,6 @@
 import { cards, suit } from "../constants/cards";
 import { useState } from "react";
+import { stateType } from "../../App";
 
 export function getCardDeck() {
   let deck: string[] = [];
@@ -15,12 +16,9 @@ function getRadndomInt(max: number) {
   return Math.floor(Math.random() * max);
 }
 
-export function getCard(deck: string[], setDeck: any) {
-  const index: number = getRadndomInt(deck.length);
-  setDeck(
-    deck.filter((card) => {
-      return card != deck.at(index);
-    })
-  );
-  return deck.at(index) ?? "No_card";
+export function getCard(state: stateType, dispath: any) {
+  const index: number = getRadndomInt(state.deck.length);
+  const card = state.deck.at(index);
+  dispath({ card });
+  return card ?? "no card";
 }

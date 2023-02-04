@@ -1,23 +1,61 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useReducer, useState } from "react";
 import "./App.css";
 import { getCardDeck } from "./lib/healpers/getCardDeck";
 import Table from "./components/Table";
 import { crupieLoop, handOver } from "./lib/crupie/useCrupie";
+import { getStreet, streetCheck } from "./lib/healpers/street";
+export type stateType = { deck: string[] };
+type actionType = { card: string };
+
+function reduser(state: stateType, action: actionType): stateType {
+  let newDeck = state.deck.filter((card) => {
+    if (card == action.card) {
+      return false;
+    } else {
+      return true;
+    }
+  });
+  if (action.card == "newDeck") {
+    return { deck: getCardDeck() };
+  }
+
+  return { deck: newDeck };
+}
 
 function App() {
-  const [deck, setDeck] = useState<string[]>(getCardDeck());
+  // const [deck, setDeck] = useState<string[]>(getCardDeck());
   const [table, setTable] = useState<any>([]);
   const [hands, setHands] = useState<any>();
   const [step, setStep] = useState<number>(0);
   const [pot, setPot] = useState<any>({ Sum: 0 });
   const [inputValue, setInputValue] = useState<any>(100);
 
+  let testDeck = ["9C", "8C", "7C", "5C", "AH"];
+  let testHends = {
+    "0": ["7S", "2C"],
+    "1": ["2C", "JC"],
+    "2": ["JH", "10S"],
+    "3": ["5D", "KD"],
+  };
+  console.log(streetCheck(testDeck, testHends["2"]));
+
+  const [state, dispatch] = useReducer(reduser, {
+    deck: getCardDeck(),
+  });
+
   useEffect(() => {
-    console.log(pot);
-  }, [pot]);
+    console.log(state);
+  }, [state]);
 
   return (
     <div className="App">
+      <button
+        onClick={() => {
+          dispatch({ card: "AH" });
+        }}
+      >
+        Hello, it is me
+      </button>
       <Table table={table} cards={hands} />
       <button
         onClick={() =>
@@ -27,8 +65,8 @@ function App() {
             hands,
             table,
             setTable,
-            deck,
-            setDeck,
+            state,
+            dispath: dispatch,
             setHands,
             pot,
             setPot,
