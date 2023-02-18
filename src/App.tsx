@@ -22,6 +22,19 @@ function reduser(state: stateType, action: actionType): stateType {
   return { deck: newDeck };
 }
 
+export const combNumber: { [index: string]: number } = {
+  "Rojal flash": 1,
+  "Street Flash": 2,
+  Care: 3,
+  "Full house": 4,
+  Flash: 5,
+  Street: 6,
+  Set: 7,
+  "To pare": 8,
+  Pare: 9,
+  "No combinations": 10,
+};
+
 function App() {
   // const [deck, setDeck] = useState<string[]>(getCardDeck());
   const [table, setTable] = useState<any>([]);
@@ -37,6 +50,7 @@ function App() {
     "2": ["JH", "10S"],
     "3": ["5D", "KD"],
   };
+
   console.log(streetCheck(testDeck, testHends["2"]));
 
   const [state, dispatch] = useReducer(reduser, {

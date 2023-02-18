@@ -28,18 +28,34 @@ export function compareNumeric(a: number, b: number) {
 //////////////////////////////////
 function getCombination(hand: any, table: any) {
   const comb = {
-    9: rojalFlash(table, hand),
-    8: streetFlashCheck(table, hand),
-    7: careCheck(table, hand),
-    6: checkFullHouse(table, hand),
-    5: flashCheck(table, hand),
-    4: streetCheck(table, hand),
-    3: setCheck(table, hand),
-    2: toPareCheck(table, hand),
-    1: pareCheck(table, hand),
+    9: { result: rojalFlash(table, hand), name: "Rojal flash" },
+    8: { result: streetFlashCheck(table, hand), name: "Street Flash" },
+    7: { result: careCheck(table, hand), name: "Care" },
+    6: { result: checkFullHouse(table, hand), name: "Full house" },
+    5: { result: flashCheck(table, hand), name: "Flash" },
+    4: { result: streetCheck(table, hand), name: "Street" },
+    3: { result: setCheck(table, hand), name: "Set" },
+    2: { result: toPareCheck(table, hand), name: "To pare" },
+    1: { result: pareCheck(table, hand), name: "Pare" },
   };
 
-  console.log(comb);
+  return (
+    Object.values(comb)
+      .filter(({ result }) => {
+        if (!result) {
+          return false;
+        }
+        if (result == "false") {
+          return false;
+        }
+        if (result.length < 1) {
+          return false;
+        }
+
+        return true;
+      })
+      .at(-1) || "no combinations"
+  );
 
   /*  console.log(rojalFlash(table, hand));
   console.log(streetFlashCheck(table, hand));

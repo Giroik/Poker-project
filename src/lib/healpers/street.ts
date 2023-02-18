@@ -19,7 +19,6 @@ export function streetCheck(tableCards: any, playerCards: any) {
   if (Object.keys(cardsValue).includes(card2)) {
     card1 = cardsValue[card2];
   }
-  console.log(Object.keys(cardsValue));
   return getStreet(tableCards, card1, card2);
 }
 
@@ -35,7 +34,6 @@ export function getStreet(tableCards: any, card1: any, card2: any) {
   all = all.filter((item: number, index: number) => {
     return all.indexOf(item) == index;
   });
-  console.log(all);
   if (all.length < 5) {
     return result;
   }
