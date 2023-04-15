@@ -1,13 +1,24 @@
 import React, { useCallback, useEffect, useReducer, useState } from "react";
 import "./App.css";
-import { getCardDeck } from "./lib/healpers/getCardDeck";
+import { getCardDeck, getRadndomInt } from "./lib/healpers/getCardDeck";
 import Table from "./components/Table";
 import { crupieLoop, handOver } from "./lib/crupie/useCrupie";
 import { getStreet, streetCheck } from "./lib/healpers/street";
 export type stateType = { deck: string[] };
 type actionType = { card: string };
 
+class DeckObject {
+  coloda = getCardDeck();
+  getCard = () => {
+    this.coloda = this.coloda.slice(0, Number(this.coloda.length - 2));
+    console.log(this.coloda);
+  };
+}
+
+const deckObj = new DeckObject();
+
 function reduser(state: stateType, action: actionType): stateType {
+  "  console.log(state.deck);";
   let newDeck = state.deck.filter((card) => {
     if (card == action.card) {
       return false;
@@ -59,24 +70,11 @@ function App() {
     //console.log(state);
   }, [state]);
 
-  const onClick = useCallback(
-    function () {
-      crupieLoop({
-        step,
-        setStep,
-        hands,
-        table,
-        setTable,
-        state,
-        dispath: dispatch,
-        setHands,
-        pot,
-        setPot,
-      });
-    },
-    [state.deck]
-  );
-
+  const onClick = () => {
+    deckObj.getCard();
+    deckObj.getCard();
+    deckObj.getCard();
+  };
   return (
     <div className="App">
       <button

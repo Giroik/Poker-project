@@ -12,7 +12,7 @@ export function getCardDeck() {
   return deck;
 }
 
-function getRadndomInt(max: number) {
+export function getRadndomInt(max: number) {
   return Math.floor(Math.random() * max);
 }
 
