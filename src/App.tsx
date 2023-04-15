@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer, useState } from "react";
+import React, { useCallback, useEffect, useReducer, useState } from "react";
 import "./App.css";
 import { getCardDeck } from "./lib/healpers/getCardDeck";
 import Table from "./components/Table";
@@ -51,15 +51,31 @@ function App() {
     "3": ["5D", "KD"],
   };
 
-  console.log(streetCheck(testDeck, testHends["2"]));
-
   const [state, dispatch] = useReducer(reduser, {
     deck: getCardDeck(),
   });
 
   useEffect(() => {
-    console.log(state);
+    //console.log(state);
   }, [state]);
+
+  const onClick = useCallback(
+    function () {
+      crupieLoop({
+        step,
+        setStep,
+        hands,
+        table,
+        setTable,
+        state,
+        dispath: dispatch,
+        setHands,
+        pot,
+        setPot,
+      });
+    },
+    [state.deck]
+  );
 
   return (
     <div className="App">
@@ -71,24 +87,7 @@ function App() {
         Hello, it is me
       </button>
       <Table table={table} cards={hands} />
-      <button
-        onClick={() =>
-          crupieLoop({
-            step,
-            setStep,
-            hands,
-            table,
-            setTable,
-            state,
-            dispath: dispatch,
-            setHands,
-            pot,
-            setPot,
-          })
-        }
-      >
-        Crupie Loop
-      </button>
+      <button onClick={onClick}>Crupie Loop</button>
       <br />
       <br />
       <button
@@ -102,11 +101,9 @@ function App() {
         type={"text"}
         value={inputValue}
         onChange={(e) => {
-          console.log(e);
           setInputValue(e.target.value);
         }}
         onKeyDown={(e) => {
-          console.log(e);
           if (e.key == "ArrowUp") {
             setInputValue(Number(e.target.value) + 100);
           }

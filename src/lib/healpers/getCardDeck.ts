@@ -16,9 +16,10 @@ function getRadndomInt(max: number) {
   return Math.floor(Math.random() * max);
 }
 
-export function getCard(state: stateType, dispath: any) {
+export async function getCard(state: stateType, dispath: any) {
   const index: number = getRadndomInt(state.deck.length);
   const card = state.deck.at(index);
-  dispath({ card });
+  await dispath({ card });
+  console.log(state.deck);
   return card ?? "no card";
 }

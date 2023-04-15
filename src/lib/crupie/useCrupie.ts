@@ -56,7 +56,6 @@ export function crupieLoop({
     };
     setPot(bank);
 
-    console.log(bank);
     setStep(2);
   } else if (step === 2) {
     console.log("Preflop");
@@ -65,11 +64,14 @@ export function crupieLoop({
   } else if (step === 3) {
     console.log("Flop");
     //appendTable({table, setDeck, deck, setTable})
-    setTable([
-      getCard(state, dispath),
-      getCard(state, dispath),
-      getCard(state, dispath),
-    ]);
+    getCard(state, dispath).then(() =>
+      getCard(state, dispath).then(() => getCard(state, dispath))
+    );
+    // setTable([
+    //   getCard(state, dispath),
+    //   getCard(state, dispath),
+    //   getCard(state, dispath)
+    // ]);
 
     setStep(4);
   } else if (step === 4) {
@@ -109,13 +111,17 @@ function appendTable({ table, setDeck, deck, setTable }: any) {
     setTable([...table, getCard(deck, setDeck)]);
   }
 }
-export function handOver(players: number, state: stateType, dispath: any) {
+export async function handOver(
+  players: number,
+  state: stateType,
+  dispath: any
+) {
   const hands: { [index: number]: string[] } = {};
   for (let i = 0; i < players; i++) {
-    const card2 = getCard(state, dispath);
-    const card1 = getCard(state, dispath);
+    const card2 = await getCard(state, dispath);
+    const card1 = await getCard(state, dispath);
     const hand = [card1, card2];
-    hands[i] = hand;
+    //hands[i] = hand;
   }
   return hands;
 }

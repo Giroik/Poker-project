@@ -5,7 +5,6 @@ import { tab } from "@testing-library/user-event/dist/tab";
 function cardsRecognition(cards: { [i: string]: string[] }, table: string[]) {
   let query = "?cc=";
   query += table.toString();
-  console.log(query);
   Object.values(cards).forEach((cardArray) => {
     query += "&pc[]=" + cardArray.toString();
   });
@@ -16,7 +15,6 @@ function cardsRecognition(cards: { [i: string]: string[] }, table: string[]) {
     .then((response) => response.json())
     .then((price) => console.log(price)); ////// написать код который
 
-  console.log(cards, table);
   let allComb: any = {};
 
   Object.keys(cards).forEach((key: any) => {
@@ -51,7 +49,6 @@ function cardsRecognition(cards: { [i: string]: string[] }, table: string[]) {
       return true;
     })
     .at(0);
-  console.log(winner);
 
   let usedCombinations = ["Care", "Set", "To pare", "Pare"];
   let betweenResults = [...table, ...cards[Number(winner[0])]];
@@ -77,7 +74,6 @@ function cardsRecognition(cards: { [i: string]: string[] }, table: string[]) {
     });
 
     console.log(winnResults);
-    console.log(betweenResults);
 
     //winnResults.push();
   }
