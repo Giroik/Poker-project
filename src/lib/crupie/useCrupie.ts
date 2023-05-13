@@ -27,6 +27,7 @@ export function crupieLoop({
   setHands,
   pot,
   setPot,
+  deckObj,
 }: {
   step: number;
   setStep: any;
@@ -38,9 +39,15 @@ export function crupieLoop({
   setHands: any;
   pot: any;
   setPot: any;
+  deckObj: any;
 }) {
   if (step == 0) {
-    setHands(handOver(4, state, dispath));
+    let data = [];
+    for (let i = 0; i < 4; i++) {
+      data.push([deckObj.getCard(), deckObj.getCard()]);
+    }
+    console.log(deckObj.getCard());
+    setHands(data);
     setStep(1);
   }
   if (step === 1) {
@@ -63,27 +70,24 @@ export function crupieLoop({
     setStep(3);
   } else if (step === 3) {
     console.log("Flop");
-    //appendTable({table, setDeck, deck, setTable})
-    getCard(state, dispath).then(() =>
-      getCard(state, dispath).then(() => getCard(state, dispath))
-    );
-    // setTable([
-    //   getCard(state, dispath),
-    //   getCard(state, dispath),
-    //   getCard(state, dispath)
-    // ]);
+
+    let data = [];
+    for (let i = 0; i < 3; i++) {
+      data.push(deckObj.getCard());
+    }
+    console.log(deckObj.getCard());
+    setTable(data);
 
     setStep(4);
   } else if (step === 4) {
     console.log("Turn");
-    //appendTable({table, setDeck, deck, setTable})
-    setTable([...table, getCard(state, dispath)]);
+
+    setTable([...table, deckObj.getCard()]);
 
     setStep(5);
   } else if (step === 5) {
     console.log("River");
-    //appendTable({table, setDeck, deck, setTable})
-    setTable([...table, getCard(state, dispath)]);
+    setTable([...table, deckObj.getCard()]);
 
     setStep(6);
   } else if (step === 6) {
@@ -95,7 +99,7 @@ export function crupieLoop({
     console.log("Clear");
     setTable([]);
     setHands([]);
-    dispath({ card: "newDeck" });
+    deckObj.update();
     setStep(0);
   }
 }

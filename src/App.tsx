@@ -10,12 +10,23 @@ type actionType = { card: string };
 class DeckObject {
   coloda = getCardDeck();
   getCard = () => {
-    this.coloda = this.coloda.slice(0, Number(this.coloda.length - 2));
-    console.log(this.coloda);
+    const index: number = getRadndomInt(this.coloda.length);
+    const card = this.coloda[index];
+    this.coloda = this.coloda.filter((colodaCard) => {
+      if (colodaCard == card) {
+        return false;
+      }
+      return true;
+    });
+    return card;
+    console.log(this.coloda, card);
+  };
+  update = () => {
+    this.coloda = getCardDeck();
   };
 }
 
-const deckObj = new DeckObject();
+export const deckObj = new DeckObject();
 
 function reduser(state: stateType, action: actionType): stateType {
   "  console.log(state.deck);";
@@ -71,9 +82,19 @@ function App() {
   }, [state]);
 
   const onClick = () => {
-    deckObj.getCard();
-    deckObj.getCard();
-    deckObj.getCard();
+    crupieLoop({
+      step,
+      setStep,
+      hands,
+      table,
+      setTable,
+      state,
+      dispath: dispatch,
+      setHands,
+      pot,
+      setPot,
+      deckObj,
+    });
   };
   return (
     <div className="App">
