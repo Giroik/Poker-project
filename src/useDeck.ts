@@ -1,4 +1,4 @@
-import { getCardDeck, getRadndomInt } from "./lib/healpers/getCardDeck";
+import { getCardDeck, getRadndomInt } from "./pages/Game/utils/getCardDeck";
 import { useReducer } from "react";
 export type stateType = { deck: string[] };
 type actionType = { card: string };
